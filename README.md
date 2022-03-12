@@ -2,12 +2,35 @@
 
 Web programming exercises
 
+
+## What's popular
+
+<https://bootcamp.berkeley.edu/blog/most-in-demand-programming-languages/>
+
+<https://statisticsanddata.org/data/the-most-popular-programming-languages-1965-2021/>
+
+
 ## HTML guides
 
 <https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio>
 
-
 ## Web servers
+
+Requests and responses, the messages we send to, and receive from, the server.
+
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Messages
+
+Typically modelled as objects in whatever programming language you are using.
+
+Serving static files
+
+Templates
+
+Authentication
+
+Streaming
+
+Hosting and proxies
 
 ### Python WSGI
 
