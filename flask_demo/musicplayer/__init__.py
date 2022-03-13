@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, Response
+from flask import Flask, Response, jsonify
 import logging
 
 logging.basicConfig(level=logging.DEBUG)
@@ -18,6 +18,12 @@ def create_app():
     from musicplayer import page
     app.register_blueprint(page.bp) 
     app.add_url_rule("/", endpoint="index")
+
+    # album tracklist
+    @app.route("/tracks/<path:album>")
+    def tracks(album):
+        data = ["a", "b", "c"]
+        return jsonify(data)
 
     # audio streaming
     @app.route("/music/<path:tune>")

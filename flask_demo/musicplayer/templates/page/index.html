@@ -16,7 +16,7 @@
 <div class="row align-items-start">
   <div class="col">
       <h2>Albums</h2>
-      <div class="list-group">
+      <div class="list-group" id="albumList">
         {% for album in albums %}
           <a href="?a={{ album.id }}" class="list-group-item list-group-item-action">{{ album.title }}</a>
         {% endfor %}
@@ -46,26 +46,47 @@
   
   const playlist = new Array();
 
+  function buildTrackList(tracks){
+    let items = "\n";
+    tracks.forEach(function (track){
+      items += '<a href="#'+track+'" class="list-group-item list-group-item-action">' + track + '</a>\n';
+    })
+    console.debug("replacing", $('#trackList').html());
+    $('#trackList').html(items);
+    // Action for track selection
+    $('#trackList a').on('click', function (e) {
+      e.preventDefault();
+      let a = this.innerText;
+      playlist.push(a);
+      console.debug("playlist = ", playlist);
+      buildPlayList();
+    });
+  }
+
   function buildPlayList(){
     let items = "";
     playlist.forEach(function (song){
       console.debug("song = ", song);
-      items += '<a href="#" class="list-group-item list-group-item-action">' + song + '</a>';
+      items += '<a href="#'+song+'" class="list-group-item list-group-item-action">' + song + '</a>';
     })
     $('#playList').html(items);
   }
 
-  
-  // Action for track selection
-  $('#trackList a').on('click', function (e) {
+  // Action for album selection
+  $('#albumList a').on('click', function (e) {
     e.preventDefault();
     let a = this.innerText;
-    playlist.push(a);
+    fetch("/tracks/"+a).then(response => response.json())
+    .then(data => {
+      console.debug('tracklist', data);
+      buildTrackList(data);
+    });
     console.debug("playlist = ", playlist);
     buildPlayList();
     // this.innerText = "wibble";
     
-  })
+  });
+  
 </script>
 {% endblock %}
 
