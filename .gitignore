@@ -2,6 +2,9 @@
 .venv
 *.pyc
 
+# Audio
+*.wav
+
 # Logs
 logs
 *.log

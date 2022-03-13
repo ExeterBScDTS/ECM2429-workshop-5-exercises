@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<figure>
+  <figcaption>Listen</figcaption>
+  <audio
+      controls
+      src="/music/ggg/ghf">
+          Your browser does not support the
+          <code>audio</code> element.
+  </audio>
+</figure>
+{% endblock %}
+
+{% block content %}
+<div class="row align-items-start">
+  <div class="col">
+      <h2>Albums</h2>
+      <div class="list-group">
+        {% for album in albums %}
+          <a href="?a={{ album.id }}" class="list-group-item list-group-item-action">{{ album.title }}</a>
+        {% endfor %}
+        </div>
+  </div>
+  <div class="col">
+    <h2>Tracks</h2>
+    <div class="list-group" id="trackList">
+      {% for track in tracks %}
+      <a href="#" class="list-group-item list-group-item-action">{{ track.title }}</a>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="col">
+    <h2>Playlist</h2>
+    <div class="list-group" id="playList">
+      {% for song in playlist %}
+      <a href="#" class="list-group-item list-group-item-action">{{ song }}</a>
+      {% endfor %}
+    </div>
+  </div>
+
+</div>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script>
+  
+  const playlist = new Array();
+
+  function buildPlayList(){
+    let items = "";
+    playlist.forEach(function (song){
+      console.debug("song = ", song);
+      items += '<a href="#" class="list-group-item list-group-item-action">' + song + '</a>';
+    })
+    $('#playList').html(items);
+  }
+
+  
+  // Action for track selection
+  $('#trackList a').on('click', function (e) {
+    e.preventDefault();
+    let a = this.innerText;
+    playlist.push(a);
+    console.debug("playlist = ", playlist);
+    buildPlayList();
+    // this.innerText = "wibble";
+    
+  })
+</script>
+{% endblock %}
+

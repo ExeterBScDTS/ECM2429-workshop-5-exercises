@@ -9,6 +9,17 @@ Web programming exercises
 
 <https://statisticsanddata.org/data/the-most-popular-programming-languages-1965-2021/>
 
+## HTML and CSS
+
+(and Javascript)
+
+### CDN (Content Delivery Networks)
+
+If you choose to use a standard library for all, or some, of your CSS and Javascript libraries there
+are online sources for these, called CDNs.
+
+For Bootstrap see
+<https://www.bootstrapcdn.com/>
 
 ## HTML guides
 
