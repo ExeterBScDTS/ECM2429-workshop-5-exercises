@@ -3,16 +3,21 @@ from flask import render_template
 from flask import request
 import logging
 
+import player.musicdb as muscicdb
+
 bp = Blueprint("page", __name__)
 
 @bp.route("/")
 def index():
-    albums = [{"id": 0, "title": "never mind"}, {"id": 1, "title": "manifesto"}]
 
-    tracks = [{"id": "n/n1", "title": "n1"}, {"id": "n/n2", "title": "n2"}]
+    albumData = []
 
-    album_id = request.args.get('a')
-    # album_id will be None, a valid id, or an invalid id (perhaps something the user made up)
+    db = muscicdb.MusicDB("file:music.db?mode=ro")
+    albums = db.get_album_names()
 
-    logging.debug(f"album_id={album_id}")
-    return render_template("page/index.html", albums=albums, tracks=tracks)
+    # Want list in a different format as planning to have
+    # album ref/id not always be displayed name.
+    for album in albums:
+        albumData.append({"id": album, "title": album[0:-1]})
+
+    return render_template("page/index.html", albums=albumData)

@@ -4,8 +4,9 @@
 <figure>
   <figcaption>Listen</figcaption>
   <audio
+      id="audioPlayer"
       controls
-      src="/music/ggg/ghf">
+      src="">
           Your browser does not support the
           <code>audio</code> element.
   </audio>
@@ -18,7 +19,7 @@
       <h2>Albums</h2>
       <div class="list-group" id="albumList">
         {% for album in albums %}
-          <a href="?a={{ album.id }}" class="list-group-item list-group-item-action">{{ album.title }}</a>
+          <a href="?a={{ album.id }}" class="list-group-item list-group-item-action" data-id="{{ album.id }}">{{ album.title }}</a>
         {% endfor %}
         </div>
   </div>
@@ -53,7 +54,6 @@
       '" class="list-group-item list-group-item-action" data-album="' + album + '"">' + 
         track + '</a>\n';
     })
-    console.debug("replacing", $('#trackList').html());
     $('#trackList').html(items);
     // Action for track selection
     $('#trackList a').on('click', function (e) {
@@ -73,12 +73,20 @@
       items += '<a href="#'+song+'" class="list-group-item list-group-item-action">' + song + '</a>';
     })
     $('#playList').html(items);
+    // Action for song selection
+    $('#playList a').on('click', function (e) {
+      //e.preventDefault();
+      let song = this.innerText;
+      console.debug("playing: ", song);
+      $('#audioPlayer').attr("src", "/music/" + song);
+      document.getElementById('audioPlayer').play();
+    });
   }
 
   // Action for album selection
   $('#albumList a').on('click', function (e) {
     e.preventDefault();
-    let a = this.innerText;
+    let a = this.dataset.id;
     fetch("/tracks/"+a).then(response => response.json())
     .then(data => {
       console.debug('tracklist', data);
