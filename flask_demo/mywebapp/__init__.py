@@ -2,6 +2,8 @@ import os
 
 from flask import Flask
 
+from datetime import datetime
+
 
 def create_app():
     """Create and configure an instance of the Flask application."""
@@ -20,6 +22,10 @@ def create_app():
 
 
     # Can add other, non-blueprint, routes like this.
+    @app.route("/date/")
+    def date():
+        return("<h1>" + str(datetime.now()) + "</h1>")
+
     @app.route("/hello/")
     def hello():
         # Could return text here, plain, or HTML, e.g.
