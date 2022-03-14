@@ -25,17 +25,17 @@
   <div class="col">
     <h2>Tracks</h2>
     <div class="list-group" id="trackList">
-      {% for track in tracks %}
-      <a href="#" class="list-group-item list-group-item-action">{{ track.title }}</a>
-      {% endfor %}
+      <!--
+      <a href="#" class="list-group-item list-group-item-action">track</a>
+      -->
     </div>
   </div>
   <div class="col">
     <h2>Playlist</h2>
     <div class="list-group" id="playList">
-      {% for song in playlist %}
-      <a href="#" class="list-group-item list-group-item-action">{{ song }}</a>
-      {% endfor %}
+      <!--
+      <a href="#" class="list-group-item list-group-item-action">song</a>
+      -->
     </div>
   </div>
 
@@ -46,18 +46,21 @@
   
   const playlist = new Array();
 
-  function buildTrackList(tracks){
+  function buildTrackList(album, tracks){
     let items = "\n";
     tracks.forEach(function (track){
-      items += '<a href="#'+track+'" class="list-group-item list-group-item-action">' + track + '</a>\n';
+      items += '<a href="#' + track +
+      '" class="list-group-item list-group-item-action" data-album="' + album + '"">' + 
+        track + '</a>\n';
     })
     console.debug("replacing", $('#trackList').html());
     $('#trackList').html(items);
     // Action for track selection
     $('#trackList a').on('click', function (e) {
       e.preventDefault();
-      let a = this.innerText;
-      playlist.push(a);
+      let track = this.innerText;
+      let album = this.dataset.album;
+      playlist.push(album+track);
       console.debug("playlist = ", playlist);
       buildPlayList();
     });
@@ -79,12 +82,8 @@
     fetch("/tracks/"+a).then(response => response.json())
     .then(data => {
       console.debug('tracklist', data);
-      buildTrackList(data);
+      buildTrackList(a, data);
     });
-    console.debug("playlist = ", playlist);
-    buildPlayList();
-    // this.innerText = "wibble";
-    
   });
   
 </script>
